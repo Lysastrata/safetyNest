@@ -1,7 +1,7 @@
 package com.tali.safetynest.controllers;
 
 import java.io.IOException;
-
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +30,7 @@ public Users(UserService userService) {
     public void registration(HttpServletRequest request) {
     		System.out.println("in post");
     		String role = request.getParameter("role");
+    		String phoneNum = request.getParameter("phoneNum");
     		String email = request.getParameter("email");
     		String peopleNum = request.getParameter("peopleNum");
     		String allowPets = request.getParameter("allowPets");
@@ -40,6 +41,7 @@ public Users(UserService userService) {
     		
         User user = new User();
         user.setUsername(email);
+        user.setUsername(phoneNum);
         user.setZipcode(Integer.parseInt(zipcode));
         user.setName(name);
         user.setProvider(Boolean.parseBoolean(role));
@@ -47,17 +49,16 @@ public Users(UserService userService) {
         user.setDays(Integer.parseInt(dayNum));
         user.setPets(Boolean.parseBoolean(allowPets));
         userService.saveUser(user);    
-        
     	}
         
-    	@RequestMapping("/{zipcode}")
-        public void seekerPage(@PathVariable(value="zipcode") int zipcode, HttpServletRequest request, HttpServletResponse response) throws IOException {
-    		User user = userService.findOneByZipcode(zipcode);
-    		String json = new Gson().toJson(user);
+    	@RequestMapping("/")
+        public void seekerPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    		List<User> users = (List<User>) userService.findOne();
+    		String json = new Gson().toJson(users);
     	    response.setContentType("application/json");
     	    response.setCharacterEncoding("UTF-8");
     	    response.getWriter().write(json);
-
+    	    userService.destroyUser(users.get(0).getId());
     		
     	}
     

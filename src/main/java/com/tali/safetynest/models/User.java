@@ -38,7 +38,7 @@ public class User {
     private int roomNumber;
     private int days;
     private boolean pets;
-
+    private String phone;
     private Date createdAt;
     private Date updatedAt;
     private boolean isProvider;
@@ -97,6 +97,14 @@ public class User {
 
 	public boolean isPets() {
 		return pets;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public void setPets(boolean pets) {

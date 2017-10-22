@@ -1,5 +1,7 @@
 package com.tali.safetynest.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.tali.safetynest.models.User;
@@ -21,8 +23,12 @@ public class UserService {
     }    
     
     // 3
-    public User findOneByZipcode(int zipcode) {
-        return userRepository.findOneByZipcode(zipcode);
+    public List <User> findOne() {
+        return userRepository.getSingleUser();
     }
+    public void destroyUser(Long id) {
+        userRepository.delete(id);
+    }
+
     
 }
